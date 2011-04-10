@@ -15,7 +15,7 @@ class UserMapperTest extends PHPUnit_Extensions_Database_TestCase
 
     protected function getDataSet()
     {
-        return $this->createFlatXMLDataSet(dirname(__FILE__).'/../foo.xml');
+        return $this->createFlatXMLDataSet(__DIR__ . '/../data/foo.xml');
     }
 
     /**
@@ -44,7 +44,7 @@ class UserMapperTest extends PHPUnit_Extensions_Database_TestCase
 
         $queryTable = $this->getConnection()->createQueryTable('user', 'SELECT * FROM user ORDER BY id ASC');
 
-        $expectedTable = $this->createFlatXmlDataSet(__DIR__ . "/../expectedUser.xml")
+        $expectedTable = $this->createFlatXmlDataSet(__DIR__ . "/../data/expectedUser.xml")
                               ->getTable("user");
 
         $this->assertTablesEqual($expectedTable, $queryTable);
