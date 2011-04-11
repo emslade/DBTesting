@@ -51,4 +51,16 @@ class UserMapper
         $user->setId($this->db->lastInsertId());
         $this->map[$user] = (int) $this->db->lastInsertId();
     }
+
+    public function delete(\User $user) 
+    {
+        if (!isset($this->map[$user])) {
+            throw new Exception('Object does not exist, cannot delete');
+        }
+
+        $query = $this->db->prepare('DELETE FROM user WHERE id = ?');
+        $query->execute(array($user->getId()));
+
+        unset($this->map[$user]);
+    }
 }

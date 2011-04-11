@@ -49,4 +49,13 @@ class UserMapperTest extends PHPUnit_Extensions_Database_TestCase
 
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
+
+    public function testRemovingUserRemovesUser()
+    {
+        $userMapper = new UserMapper($this->db);
+        $user = $userMapper->findById(1);
+        $userMapper->delete($user);
+
+        $this->assertEquals(0, $this->getConnection()->getRowCount('user'));
+    }
 }
