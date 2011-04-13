@@ -32,6 +32,7 @@ class UserMapperTest extends PHPUnit_Extensions_Database_TestCase
         $userMapper = new UserMapper($this->db);
         $user = $userMapper->findById(1);
         $this->assertTrue($user instanceof User);
+        $this->assertEquals('ade', $user->getUsername());
     }
 
     public function testInsertingUserInsertsUser()
@@ -42,12 +43,12 @@ class UserMapperTest extends PHPUnit_Extensions_Database_TestCase
         $userMapper->insert($user); 
         $this->assertEquals(2, $this->getConnection()->getRowCount('user'));
 
-        $queryTable = $this->getConnection()->createQueryTable('user', 'SELECT * FROM user ORDER BY id ASC');
+        $expected = $this->createFlatXmlDataSet(__DIR__ . "/../data/expectedUser.xml");
 
-        $expectedTable = $this->createFlatXmlDataSet(__DIR__ . "/../data/expectedUser.xml")
-                              ->getTable("user");
+        $actual = new PHPUnit_Extensions_Database_DataSet_QueryDataSet($this->getConnection());
+        $actual->addTable('user');
 
-        $this->assertTablesEqual($expectedTable, $queryTable);
+        $this->assertDataSetsEqual($expected, $actual);
     }
 
     public function testRemovingUserRemovesUser()
