@@ -15,7 +15,7 @@ class UserMapperTest extends PHPUnit_Extensions_Database_TestCase
 
     protected function getDataSet()
     {
-        return $this->createFlatXMLDataSet(__DIR__ . '/../data/foo.xml');
+        return $this->createFlatXMLDataSet(__DIR__ . '/../data/user.xml');
     }
 
     /**
