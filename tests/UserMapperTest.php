@@ -43,7 +43,7 @@ class UserMapperTest extends PHPUnit_Extensions_Database_TestCase
         $userMapper->insert($user); 
         $this->assertEquals(2, $this->getConnection()->getRowCount('user'));
 
-        $expected = $this->createFlatXmlDataSet(__DIR__ . "/../data/expectedUser.xml");
+        $expected = $this->createFlatXmlDataSet(__DIR__ . "/../data/user-insert.xml");
 
         $actual = new PHPUnit_Extensions_Database_DataSet_QueryDataSet($this->getConnection());
         $actual->addTable('user');
