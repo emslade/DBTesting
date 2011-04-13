@@ -59,4 +59,17 @@ class UserMapperTest extends PHPUnit_Extensions_Database_TestCase
 
         $this->assertEquals(0, $this->getConnection()->getRowCount('user'));
     }
+
+    public function testUpdateUser()
+    {
+        $userMapper = new UserMapper($this->db);
+        $user = $userMapper->findById(1);
+        $user->setUsername('jeff');
+        $userMapper->update($user);
+
+        $expectedTable = $this->createFlatXmlDataSet(__DIR__ . "/../data/user-update.xml")->getTable('user');
+        $actualTable = $this->getConnection()->createQueryTable('user', 'SELECT * FROM user');
+
+        $this->assertTablesEqual($expectedTable, $actualTable);
+    }
 }

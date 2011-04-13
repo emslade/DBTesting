@@ -63,4 +63,16 @@ class UserMapper
 
         unset($this->map[$user]);
     }
+
+    public function update(\User $user)
+    {
+        if (!isset($this->map[$user])) {
+            throw new Exception('Object does not exist, cannot delete');
+        }
+
+        $query = $this->db->prepare('UPDATE user SET username = ? WHERE id = ?');
+        $query->execute(array($user->getUsername(), $user->getId()));
+
+        $this->map[$user] = $user->getId();
+    }
 }
